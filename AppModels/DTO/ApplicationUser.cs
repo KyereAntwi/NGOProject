@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Identity;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AppModels.DTO
 {
@@ -18,8 +16,6 @@ namespace AppModels.DTO
         public DateTime DateAdded { get; set; }
 
         public string UserId { get; set; }
-        [ForeignKey(nameof(UserId))]
-        public IdentityUser MyProperty { get; set; }
 
         public virtual ICollection<ChildSponser> Children { get; set; }
         public virtual PrayerVolunteer PrayerVolunteer { get; set; }

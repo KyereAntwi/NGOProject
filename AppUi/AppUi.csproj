@@ -20,4 +20,10 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\AppDataAccess\AppDataAccess.csproj" />
+    <ProjectReference Include="..\AppModels\AppModels.csproj" />
+  </ItemGroup>
+
 </Project>

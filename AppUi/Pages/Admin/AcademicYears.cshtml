@@ -1,0 +1,103 @@
+﻿@page
+@model AppUi.Pages.Admin.AcademicYearsModel
+@{
+    ViewData["Title"] = "AcademicYears";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <div class="row md-4">
+        <div class="col-4 offset-8 align-content-end">
+            <button class="btn btn-secondary" data-toggle="modal" data-target="#newModal">
+                <i class="fa fas fa-plus"></i>
+                Add new academic year
+            </button>
+        </div>
+    </div>
+
+    <div class="row m-md-4">
+        <div class="col-12 align-content-center">
+            @if (Model.ViewModel.Years.Count > 0)
+            {
+                <div class="table-responsive">
+                    <table width="100%" class="table table-striped table-hover" style="width: 100%">
+                        <thead>
+                            <tr>
+                                <td>Year Id</td>
+                                <td>Year Name</td>
+                                <td>Date Added</td>
+                                <td></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var year in Model.ViewModel.Years)
+                            {
+                                <tr>
+                                    <td>@year.Id</td>
+                                    <td style="text-decoration:solid">@year.Year</td>
+                                    <td>@year.DateAdded.ToLongDateString()</td>
+                                    <td>
+                                        <a class="dropdown-toggle" id="" role="button" aria-expanded="false" aria-haspopup="true" href="#" data-toggle="dropdown">
+                                            <i class="fas fa-ellipsis-v fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink"
+                                             style="left: 0px; top: 0px; position: absolute; transform: translate3d(-156px, 19px, 0px);" x-placement="bottom-end">
+                                            <div class="dropdown-header">
+                                                Action:
+                                            </div>
+                                            <a href="@Url.Page("/Admin/AcademicYearDetails", new { Id = year.Id })" asp- class="dropdown-item">View Academic Year Details</a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div style="text-align:center;">
+                    <i class="fa fas fa-shopping-basket" style="font-size: 200px"></i>
+                    <h3>There are no Academic Year Lists to display at the moment. Start by adding some!</h3>
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#newModal">
+                        <i class="fa fas fa-plus"></i>
+                        Add new academic year
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@*add new modal box*@
+<div class="modal fade" id="newModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a new Academic Year</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" role="form">
+                    <div class="form-group">
+                        <label asp-for="ViewModel.YearName"></label>
+                        <input type="text" asp-for="ViewModel.YearName" maxlength="9" class="form-control" required/>
+                        <span asp-validation-for="ViewModel.YearName"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fa fas fa-send-o md-4"></i>
+                        Add Academic Year
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

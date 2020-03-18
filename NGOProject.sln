@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29820.132
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppUi", "AppUi\AppUi.csproj", "{E5D3EDE4-16CB-4ACF-9EB8-6EBD43DE8B9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppUi", "AppUi\AppUi.csproj", "{E5D3EDE4-16CB-4ACF-9EB8-6EBD43DE8B9D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppModels", "AppModels\AppModels.csproj", "{000C600F-10B8-43E1-AEC3-13AA507AD23A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppModels", "AppModels\AppModels.csproj", "{000C600F-10B8-43E1-AEC3-13AA507AD23A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppDataAccess", "AppDataAccess\AppDataAccess.csproj", "{B08167BE-D266-4142-9594-8F2702C5B4F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppDataAccess", "AppDataAccess\AppDataAccess.csproj", "{B08167BE-D266-4142-9594-8F2702C5B4F0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

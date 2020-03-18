@@ -4,25 +4,101 @@
     ViewData["Title"] = "Welcome to DEGA Home page!";
 }
 
-    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
-        </ol>
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="..." class="d-block w-100" alt="...">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>First slide label</h5>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                </div>
+@*the carousel*@
+<div id="mainCarousel" class="carousel slide" data-ride="carousel" style="width: 100%; height: 700px; margin-top: -15px">
+    <ol class="carousel-indicators">
+        <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#mainCarousel" data-slide-to="1"></li>
+        <li data-target="#mainCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="~/images/many-children.JPG" class="d-block w-100" alt="children" height="700" />
+            <div class="carousel-caption d-none d-md-block">
+                <button type="button" class="btn btn-lg btn-outline-secondary" data-toggle="modal" data-target="#giveModal">DONATE TO SUPPORT THIS WORTHY COURSE</button>
             </div>
         </div>
-        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-        </a>
+
+        <div class="carousel-item">
+            <img src="~/images/child1.JPG" class="d-block w-100" alt="children" height="700" />
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Give to Support</h5>
+                <p>Consider given to support</p>
+                <button class="btn btn-lg btn-outline-secondary">Schedule a visit</button>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <img src="~/images/child1.JPG" class="d-block w-100" alt="children" height="700"/>
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Give to Support</h5>
+                <p>Consider given to support</p>
+                <button class="btn btn-lg btn-outline-secondary">Schedule a visit</button>
+            </div>
+        </div>
     </div>
+
+    <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+
+    <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+@*Collect all the children in the database to display*@
+<div class="container">
+    <div class="col-12">
+        @if (Model.ViewModel.Children.Count > 0)
+        {
+            foreach (var child in Model.ViewModel.Children)
+            {
+                <div class="card" style="width: 18rem;">
+                    <img src="@Url.Action("GetChildProfileImage", "Utility", new { Id = child.Id })"  class="card-img-top" alt="@child.Fullname"/>
+                    <div class="card-body">
+                        <h5 class="card-title">@child.Fullname</h5>
+                        <p class="card-text">@child.Teaser</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@*Giving modal box*@
+<div class="modal fade" id="giveModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="giveModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select an option to use to give</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="col-6 justify-content-center">
+                    <h5>Give with PayPal</h5>
+                    <form action="http://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_donations"/>
+                        <input type="hidden" name="business" value="EH5LY8HP59Z92"/>
+                        <input type="hidden" name="item_name" value="David E Gregory Christian Academy in Ghana West Africa"/>
+                        <input type="hidden" name="currency_code" value="USD"/>
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"/>
+                        <img alt="" border="0" src="https://www.paypal.com/en_US/i/src/pixel.gif" width="1" height="1"/>
+                    </form>
+                </div>
+
+                <div class="col-6"></div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

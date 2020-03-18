@@ -1,0 +1,52 @@
+﻿@page
+@model AppUi.Pages.Admin.SemestersModel
+@{
+    ViewData["Title"] = "Semesters";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@if (Model.ViewModel.Semesters.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-striped table-info">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>SEMESTER</td>
+                    <td>DATE ADDED</td>
+                    <td>YEAR</td>
+                    <td></td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var sem in Model.ViewModel.Semesters)
+                {
+                    <tr>
+                        <td>@sem.Id</td>
+                        <td>@sem.Title</td>
+                        <td>@sem.DateAdded.ToLongDateString()</td>
+                        <td>@sem.AcademicYear.Year</td>
+                        <td>
+                            <form method="post">
+                                <input asp-for="ViewModel.SemId" value="@sem.Id" style="display: none"/>
+                                <button type="submit" class="btn btn-circle btn-danger" title="Delete this semester">
+                                    <i class="fa fas fa-trash-alt"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else 
+{
+    <div class="row">
+        <div class="col-12 align-content-center">
+            <i class="fa fas fa-trash-o" style="font-size: 200px"></i>
+            <h4>There are no semesters to display</h4>
+        </div>
+    </div>
+}
