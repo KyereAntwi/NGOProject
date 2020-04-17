@@ -1,0 +1,83 @@
+﻿@page
+@model AppUi.Pages.Admin.GalleriesModel
+@{
+    ViewData["Title"] = "Galleries";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@if (Model.ViewModel.Galleries.Count > 0)
+{
+    <div class="row mb-3"><button class="btn btn-sm btn-info" data-toggle="modal" data-target="#newModal">Add a Gallery</button></div>
+    <div class="row text-center text-lg-left">
+        @foreach (var item in Model.ViewModel.Galleries)
+        {
+            <div class="col-lg-3 col-md-4 col-6">
+                <div class="card d-block mb-4 h-100" style="width: 18rem;">
+                    <img class="img-fluid img-thumbnail" src="@Url.Page("/GalleryImage", new { Id = item.Id })" />
+                    <div class="card-body">
+                        <p class="card-text">@item.Description</p>
+                        <a href="#" class="btn btn-primary">Delete Gallery</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-12" style="text-align:center">
+            <i class="fa fas fa-file" style="font-size: 100px"></i>
+            <p>There are no galleries added so far. Start by adding some</p>
+            <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#newModal">Add a Gallery</button>
+        </div>
+    </div>
+}
+
+@*add new modal box*@
+<div class="modal fade" id="newModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a new Gallery</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form enctype="multipart/form-data" method="post">
+                    <div class="form-group">
+                        <label asp-for="ViewModel.Description"></label>
+                        <textarea type="text" asp-for="ViewModel.Description" class="form-control" required></textarea>
+                        <span asp-validation-for="ViewModel.Description"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <img src="~/images/21104.png" class="img-thumbnail img-sm embed-responsive" style="text-align:center" id="fileImage" />
+                        <input asp-for="ViewModel.Image" class="form-control" hidden type="file" id="fileInput" required/>
+                        <button class="btn btn-sm btn-info" id="fileUpload" style="text-align:center">
+                            <i class="fa fas fa-file mr-4"></i>
+                            Upload an Image
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fa fas fa-send-o md-4"></i>
+                        Submit Gallery
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

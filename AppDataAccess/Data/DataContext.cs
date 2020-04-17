@@ -24,5 +24,12 @@ namespace AppDataAccess.Data
         public DbSet<Semester> Semesters { get; set; }
         public DbSet<SemesterRegistration> SemesterRegistrations { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<TimeLine> TimeLines { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
+        public DbSet<Blog> Blogs { get; set; }
+        public DbSet<BlogSub> BlogSubs { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Visitation> Visitations { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
     }
 }

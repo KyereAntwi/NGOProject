@@ -1,0 +1,67 @@
+﻿@page
+@model AppUi.Pages.Volunteer.PreviewChildModel
+
+@{
+    Layout = "_VolunteerLayout";
+}
+
+<div class="row">
+    <div class="col-md-5 col-sm-12">
+        <div class="card">
+            <img class="card-img-top" src="@Url.Page("/ChildImage", new { Id = Model.ViewModel.Child.Id })"/>
+            
+            <div class="card-body">
+                <h3 class="card-title">@Model.ViewModel.Child.GivingName</h3>
+                <p class="card-subtitle">@Model.ViewModel.Child.Fullname</p>
+
+                <p>Date of birth: <span><b>@Model.ViewModel.Child.DateOfBirth.ToShortDateString()</b></span></p>
+                <p>Gender: <span><b>@Model.ViewModel.Child.Gender</b></span></p>
+            </div>
+
+            <div class="card-footer">
+                <form asp-page="/Volunteer/SupportChild" method="post" role="form">
+                    <input asp-for="ViewModel.Child.Id" value="@Model.ViewModel.Child.Id" hidden/>
+                    <button type="submit" class="btn btn-secondary btn-block">Support this child</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5 col-sm-12">
+        <div class="card" style="border-left:solid 5px blue;">
+            <div class="card-body">
+                <h5 class="card-title">@Model.ViewModel.Child.Nationality</h5>
+                <p><b>@Model.ViewModel.Child.Teaser</b></p>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <h3>Features of Child</h3>
+            <ul class="list-group">
+                @if (Model.ViewModel.Child.Features.Count > 0)
+                {
+                    foreach (var item in Model.ViewModel.Child.Features)
+                    {
+                        <li class="list-group-item">
+                            @if (item.Feature.Disability)
+                            {
+                                <span class="badge badge-pill badge-info">Disability</span>
+                            }
+                            else 
+                            {
+                                <span class="badge badge-pill badge-info">Ability</span>
+                            }
+                            @item.Feature.Title
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="list-group-item">
+                        There are no features for this child
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

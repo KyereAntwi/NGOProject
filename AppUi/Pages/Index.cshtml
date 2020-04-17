@@ -1,104 +1,103 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Welcome to DEGA Home page!";
+    ViewData["Title"] = "Welcome to DEGCA Home page!";
 }
 
-@*the carousel*@
-<div id="mainCarousel" class="carousel slide" data-ride="carousel" style="width: 100%; height: 700px; margin-top: -15px">
-    <ol class="carousel-indicators">
-        <li data-target="#mainCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#mainCarousel" data-slide-to="1"></li>
-        <li data-target="#mainCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="~/images/many-children.JPG" class="d-block w-100" alt="children" height="700" />
-            <div class="carousel-caption d-none d-md-block">
-                <button type="button" class="btn btn-lg btn-outline-secondary" data-toggle="modal" data-target="#giveModal">DONATE TO SUPPORT THIS WORTHY COURSE</button>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <img src="~/images/child1.JPG" class="d-block w-100" alt="children" height="700" />
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Give to Support</h5>
-                <p>Consider given to support</p>
-                <button class="btn btn-lg btn-outline-secondary">Schedule a visit</button>
-            </div>
-        </div>
-
-        <div class="carousel-item">
-            <img src="~/images/child1.JPG" class="d-block w-100" alt="children" height="700"/>
-            <div class="carousel-caption d-none d-md-block">
-                <h5>Give to Support</h5>
-                <p>Consider given to support</p>
-                <button class="btn btn-lg btn-outline-secondary">Schedule a visit</button>
+@*Collect all the children in the database to display*@
+    <div class="mt-5" style="background-image:url('/images/many-children.JPG'); background-size:cover; background-repeat:no-repeat; height: 500px">
+        <div class="container">
+            <div class="row">
+                <div class="col mt-5">
+                    <h1 class="m-4" style="font-size:100px; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:white">DEGCA</h1>
+                    <h4 class="m-1" style="font-size: 40px; font-family: 'Times New Roman'; color:white; font-weight:bold;">David E. Gregory Christian Academy</h4>
+                    <a class="btn btn-lg btn-light" href="@Url.Page("/Volunteer/Index")"><b>START HERE TO GET INVOLVED</b></a>
+                </div>
             </div>
         </div>
     </div>
 
-    <a class="carousel-control-prev" href="#mainCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>
+    <div style="background-color: lightgray;">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-12" style="font-family:'Comic Sans MS';">
+                    <h3 class="m-4" style="text-align:center;"><b>Support a child today!</b></h3>
 
-    <a class="carousel-control-next" href="#mainCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-</div>
+                    <p>When you support a child, you'll be personally connected with a boy or girl who will know your name and treasure he thought that you care. Your support would provide life-changing opportunities such as:</p>
 
-@*Collect all the children in the database to display*@
-<div class="container">
-    <div class="col-12">
-        @if (Model.ViewModel.Children.Count > 0)
-        {
-            foreach (var child in Model.ViewModel.Children)
-            {
-                <div class="card" style="width: 18rem;">
-                    <img src="@Url.Action("GetChildProfileImage", "Utility", new { Id = child.Id })"  class="card-img-top" alt="@child.Fullname"/>
-                    <div class="card-body">
-                        <h5 class="card-title">@child.Fullname</h5>
-                        <p class="card-text">@child.Teaser</p>
+                    <ul>
+                        <li>an opportunity to attend or stay in school</li>
+                        <li>medical care, which often saves lives</li>
+                        <li>nourishing food</li>
+                        <li>mentoring and a safe environment through support for building descent classroom blocks</li>
+                        <li>and most important, an opportunity to hear the gospel</li>
+                    </ul>
+
+                    <hr />
+
+                    <h3 class="m-4" style="text-align:center;"><b>Support our projects!</b></h3>
+
+                    <p>Your regular given to support our ministry would help us continue and complete our projects. Some of the projects we are involved in are as follows:</p>
+
+                    <ul>
+
+                    </ul>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="card m-4">
+                         <img src="~/images/give.jpg" class="card-img-top"/>
+                        <h6 class="card-header">Give your best support</h6>
+                        <div class="card-body">
+                            Our giving is done using a paypal account. This give link would take you Paypal's website. Use your existing Paypal account to give to support raising these children and our missions activities.
+                        </div>
+                        <form action="http://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                            <input type="hidden" name="cmd" value="_donations" />
+                            <input type="hidden" name="business" value="EH5LY8HP59Z92" />
+                            <input type="hidden" name="item_name" value="David E Gregory Christian Academy in Ghana West Africa" />
+                            <input type="hidden" name="currency_code" value="USD" />
+                            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                            <img alt="" border="0" src="https://www.paypal.com/en_US/i/src/pixel.gif" width="1" height="1" />
+                        </form>
                     </div>
                 </div>
-            }
-        }
-    </div>
-</div>
-
-@*Giving modal box*@
-<div class="modal fade" id="giveModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="giveModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Select an option to use to give</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="false">&times;</span>
-                </button>
-            </div>
-
-            <div class="modal-body">
-                <div class="col-6 justify-content-center">
-                    <h5>Give with PayPal</h5>
-                    <form action="http://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-                        <input type="hidden" name="cmd" value="_donations"/>
-                        <input type="hidden" name="business" value="EH5LY8HP59Z92"/>
-                        <input type="hidden" name="item_name" value="David E Gregory Christian Academy in Ghana West Africa"/>
-                        <input type="hidden" name="currency_code" value="USD"/>
-                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button"/>
-                        <img alt="" border="0" src="https://www.paypal.com/en_US/i/src/pixel.gif" width="1" height="1"/>
-                    </form>
-                </div>
-
-                <div class="col-6"></div>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
-</div>
+
+    <div class="container">
+        <div class="row mt-4">
+            <div class="col-12">
+
+                <div class="m-4" style="text-align:center;">
+                    <h5 style="font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color:blue">Support a child to dream</h5>
+                </div>
+
+                @if (Model.ViewModel.Children.Count > 0)
+                {
+                    foreach (var child in Model.ViewModel.Children)
+                    {
+                        <div class="card m-2" style="width: 16rem; float:left">
+
+                            @if (child.Phtotograph == null)
+                            {
+                                <img src="~/images/21104.png" class="card-img-top" alt="@child.Fullname" width="80" height="200" />
+                            }
+                            else
+                            {
+                                <img src="@Url.Page("ChildImage", new { Id = child.Id })" class="card-img-top" alt="@child.Fullname" width="80" height="200" />
+                            }
+
+                            <div class="card-body">
+                                <h6 class="card-title">@child.Fullname</h6>
+                                <p class="card-subtitle">Date of Birth: @child.DateOfBirth.ToShortDateString()</p>
+                            </div>
+                            <a class="btn btn-secondary card-link" href="@Url.Page("/Volunteer/PreviewChild", new { Id = child.Id })">SUPPORT ME</a>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("Events")
+    </div>

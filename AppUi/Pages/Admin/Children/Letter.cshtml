@@ -1,0 +1,51 @@
+﻿@page
+@model AppUi.Pages.Admin.Children.LetterModel
+@{
+    ViewData["Title"] = "Letter";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>From:</td>
+                    <td>
+                        <img src="@Url.Page("/UserImage", new { Id = Model.Letter.ApplicationUserId })" />
+                        <span>@Model.Letter.ApplicationUser.Name</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>To:</td>
+                    <td>
+                        <img src="@Url.Page("/ChildImage", new { Id = Model.Letter.ChildId })" />
+                        <span>@Model.Letter.Child.Fullname</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Date Written:</td>
+                    <td>
+                        @if (Model.Letter.DateWritten.Date == DateTime.Now.Date)
+                        {
+                            <p>Today at <span class="badge badge-pill badge-secondary">@Model.Letter.DateWritten.ToLongTimeString()</span></p>
+                        }
+                        else
+                        {
+                            <p>@Model.Letter.DateWritten.ToLongDateString() at <span class="badge badge-pill badge-secondary">@Model.Letter.DateWritten.ToLongTimeString()</span></p>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>Title:</td>
+                    <td>@Model.Letter.Title</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="jumbotron">
+            <p>@Model.Letter.Details</p>
+        </div>
+    </div>
+</div>
+

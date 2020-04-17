@@ -1,0 +1,51 @@
+﻿@page
+@model AppUi.Pages.Volunteer.WriteLetterModel
+@{
+    ViewData["Title"] = "Write A Letter";
+    Layout = "~/Pages/Shared/_VolunteerLayout.cshtml";
+}
+
+@if (Model.ViewModel.Children.Count > 0)
+{
+    <form method="post" role="form">
+        <div class="card">
+            <div class="card-body">
+                <span>Select a child to write to:</span>
+                <div class="form-group">
+                    <select asp-for="ViewModel.ChildId" class="form-control" required>
+                        @foreach (var child in Model.ViewModel.Children) 
+                        {
+                            <option value="@child.Id">
+                                <span><img src="@Url.Page("/ChildImage", new { Id = child.Id })" class="rounded-circle" width="40" height="40"/></span>
+                                @child.Fullname
+                            </option>
+                        }
+                    </select>
+                </div>
+                <span style="float:right"><button class="btn btn-sm btn-info" type="submit"><i class="mr-4 fa fas fa-send"></i> Send</button></span>
+            </div>
+
+            <div class="card-footer">
+                <span class="mr-4">Title of Letter</span>
+                <div class="form-group">
+                    <input asp-for="ViewModel.Title" class="form-control" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <h2>Letter Body</h2>
+            <textarea class="form-control" style="width:100%;" rows="30" asp-for="ViewModel.Details" required></textarea>
+        </div>
+    </form>
+}
+else 
+{
+    <div class="row">
+        <div class="col" style="text-align:center">
+            <a class="fa fas fa-envelope" style="font-size:200px"></a>
+            <h3>Sorry! you are not supporting a child yet to be able to write to. Start by supporting a child</h3>
+        </div>
+    </div>
+}
+

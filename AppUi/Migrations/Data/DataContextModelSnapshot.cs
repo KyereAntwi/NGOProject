@@ -107,6 +107,51 @@ namespace AppUi.Migrations.Data
                     b.ToTable("ApplicationUsers");
                 });
 
+            modelBuilder.Entity("AppModels.DTO.Blog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("Banner")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Introduction")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Blogs");
+                });
+
+            modelBuilder.Entity("AppModels.DTO.BlogSub", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("BlogId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subtitle")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogId");
+
+                    b.ToTable("BlogSubs");
+                });
+
             modelBuilder.Entity("AppModels.DTO.Child", b =>
                 {
                     b.Property<Guid>("Id")
@@ -186,6 +231,9 @@ namespace AppUi.Migrations.Data
                     b.Property<Guid>("ChildId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Accepted")
+                        .HasColumnType("bit");
+
                     b.Property<Guid>("ApplicationUserId")
                         .HasColumnType("uniqueidentifier");
 
@@ -234,6 +282,43 @@ namespace AppUi.Migrations.Data
                     b.ToTable("ClassSubjects");
                 });
 
+            modelBuilder.Entity("AppModels.DTO.Contact", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Address1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Address2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Country")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Street")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Telephone")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Type")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Zipcode")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Contacts");
+                });
+
             modelBuilder.Entity("AppModels.DTO.Event", b =>
                 {
                     b.Property<Guid>("Id")
@@ -253,6 +338,9 @@ namespace AppUi.Migrations.Data
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("StartingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartingTime")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Theme")
@@ -281,6 +369,26 @@ namespace AppUi.Migrations.Data
                     b.HasKey("Id");
 
                     b.ToTable("Features");
+                });
+
+            modelBuilder.Entity("AppModels.DTO.Gallery", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Galleries");
                 });
 
             modelBuilder.Entity("AppModels.DTO.Letter", b =>
@@ -314,6 +422,31 @@ namespace AppUi.Migrations.Data
                     b.HasIndex("ChildId");
 
                     b.ToTable("Letters");
+                });
+
+            modelBuilder.Entity("AppModels.DTO.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTimeAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Seen")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifications");
                 });
 
             modelBuilder.Entity("AppModels.DTO.PrayerVolunteer", b =>
@@ -372,11 +505,16 @@ namespace AppUi.Migrations.Data
                     b.Property<Guid>("SemesterId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("SubjectId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChildId");
 
                     b.HasIndex("SemesterId");
+
+                    b.HasIndex("SubjectId");
 
                     b.ToTable("SemesterRegistrations");
                 });
@@ -401,11 +539,76 @@ namespace AppUi.Migrations.Data
                     b.ToTable("Subjects");
                 });
 
+            modelBuilder.Entity("AppModels.DTO.TimeLine", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Activity")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("TimeLines");
+                });
+
+            modelBuilder.Entity("AppModels.DTO.Visitation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Cancelled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("Done")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LeavingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("ReportingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Visitations");
+                });
+
             modelBuilder.Entity("AppModels.DTO.AnouncementSub", b =>
                 {
                     b.HasOne("AppModels.DTO.Anouncement", "Anouncement")
                         .WithMany("Subs")
                         .HasForeignKey("AnouncementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppModels.DTO.BlogSub", b =>
+                {
+                    b.HasOne("AppModels.DTO.Blog", "Blog")
+                        .WithMany("Subs")
+                        .HasForeignKey("BlogId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -470,6 +673,15 @@ namespace AppUi.Migrations.Data
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("AppModels.DTO.Contact", b =>
+                {
+                    b.HasOne("AppModels.DTO.ApplicationUser", "ApplicationUser")
+                        .WithMany("Contacts")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("AppModels.DTO.Letter", b =>
                 {
                     b.HasOne("AppModels.DTO.ApplicationUser", "ApplicationUser")
@@ -481,6 +693,15 @@ namespace AppUi.Migrations.Data
                     b.HasOne("AppModels.DTO.Child", "Child")
                         .WithMany("Letters")
                         .HasForeignKey("ChildId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppModels.DTO.Notification", b =>
+                {
+                    b.HasOne("AppModels.DTO.ApplicationUser", "User")
+                        .WithMany("Notifications")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -514,6 +735,30 @@ namespace AppUi.Migrations.Data
                     b.HasOne("AppModels.DTO.Semester", "Semester")
                         .WithMany("Registrations")
                         .HasForeignKey("SemesterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AppModels.DTO.Subject", "Subject")
+                        .WithMany("Registrations")
+                        .HasForeignKey("SubjectId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppModels.DTO.TimeLine", b =>
+                {
+                    b.HasOne("AppModels.DTO.ApplicationUser", "User")
+                        .WithMany("TimeLines")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AppModels.DTO.Visitation", b =>
+                {
+                    b.HasOne("AppModels.DTO.ApplicationUser", "ApplicationUser")
+                        .WithMany("Visitations")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

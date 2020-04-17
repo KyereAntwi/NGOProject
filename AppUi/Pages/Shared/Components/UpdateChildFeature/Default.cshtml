@@ -1,0 +1,31 @@
+﻿@model UpdateChildFeatureViewModel;
+
+@if (Model.Features.Count > 0)
+{
+    <form asp-page="/Admin/Children/UpdateFeature" method="post" role="form">
+
+        <div class="form-group">
+            <input asp-for="ChildId" class="form-control"  readonly/>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="FeatureID"></label>
+            <select asp-for="FeatureID" class="form-control">
+                @foreach(var item in Model.Features) 
+                {
+                    <option value="@item.Id">@item.Title</option>
+                }
+            </select>
+        </div>
+
+        <button class="btn btn-sm btn-info" type="submit">Submit Feature to be added</button>
+    </form>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+            <h4>There are no features to add!</h4>
+        </div>
+    </div>
+}

@@ -18,7 +18,11 @@ namespace AppModels.DTO
         public string UserId { get; set; }
 
         public virtual ICollection<ChildSponser> Children { get; set; }
+        public virtual ICollection<Visitation> Visitations { get; set; }
         public virtual PrayerVolunteer PrayerVolunteer { get; set; }
         public virtual ICollection<Letter> Letters { get; set; }
+        public virtual ICollection<TimeLine> TimeLines { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Notification> Notifications { get; set; }
     }
 }

@@ -1,0 +1,46 @@
+﻿@page
+@model AppUi.Pages.StoriesModel
+
+@{
+    ViewData["Title"] = "Stories and Announcements";
+    Layout = "_Layout";
+}
+
+<div style="background-color:mediumvioletred; color: white; height:300px">
+    <div class="container">
+        <div class="row">
+            <div class="col align-content-center">
+                <h1 style="font-family:Verdana, Geneva, Tahoma, sans-serif; font-size:5rem;">Stories and Announcements</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <div class="row">
+        @if (Model.ViewModel.Anouncements.Count > 0)
+        {
+            foreach (var item in Model.ViewModel.Anouncements)
+            {
+                <div class="col">
+                    <div class="card d-block mr-2" style="width:18rem">
+                        <img class="card-img-top" src="@Url.Page("/StoryImage", new { Id = item.Id })" />
+                        <div class="card-body">
+                            <h4 class="card-title">@item.Title</h4>
+                            <h6 class="card-subtitle">@item.DateAdded.ToShortDateString()</h6>
+                        </div>
+                        <div class="card-footer">
+                            <a class="card-link" href="@Url.Page("/Story", new { Id = item.Id })">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <h1 style="text-align:center;">There are currently no Stories or Announcements published yet</h1>
+            </div>
+        }
+    </div>
+</div>

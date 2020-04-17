@@ -1,0 +1,47 @@
+﻿@page
+@model AppUi.Pages.StoryModel
+
+@{
+    ViewData["Title"] = "Story or Announcement Details";
+    Layout = "_Layout";
+}
+
+@if (Model.ViewModel.Banner != null)
+{
+    <div style="width:100%; height:400px; background-image:url('@Url.Page("/StoryImage", new { Id = Model.ViewModel.Id })'); background-size:cover; background-repeat:no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div style="width:100%; height:400px; background-image:url('/images/many-children.JPG'); background-size:cover; background-repeat:no-repeat;">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col" style="font-family:'Comic Sans MS';">
+            <h3 style="text-align:center" class="mb-2">@Model.ViewModel.Title</h3>
+        </div>
+    </div>
+
+    @foreach (var item in Model.ViewModel.Subs)
+    {
+        <div class="row mt-3">
+            <p>@item.Details</p>
+        </div>
+    }
+</div>

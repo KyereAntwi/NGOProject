@@ -1,0 +1,71 @@
+﻿@page
+@model AppUi.Pages.Admin.NewStaffModel
+@{
+    ViewData["Title"] = "New Staff";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <form enctype="multipart/form-data" method="post">
+            <h4>Add a new Staff</h4>
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <img src="~/images/21104.png" class="img-fluid" style="border-radius: 50%; text-align:center" width="100" height="100" id="fileImage" />
+                <input asp-for="ViewModel.Photograph" class="form-control" hidden type="file" id="fileInput" />
+                <button class="btn btn-sm btn-info" id="fileUpload" style="text-align:center">
+                    <i class="fa fas fa-file mr-4"></i>
+                    Upload a photograph
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Name"></label>
+                <input asp-for="ViewModel.Name" class="form-control" required />
+                <span asp-validation-for="ViewModel.Name"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Email"></label>
+                <input asp-for="ViewModel.Email" class="form-control" required />
+                <span asp-validation-for="ViewModel.Email"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Phone"></label>
+                <input asp-for="ViewModel.Phone" class="form-control" required />
+                <span asp-validation-for="ViewModel.Phone"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Nationality"></label>
+                <input asp-for="ViewModel.Nationality" class="form-control" required />
+                <span asp-validation-for="ViewModel.Nationality"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.DateOfBirth"></label>
+                <input asp-for="ViewModel.DateOfBirth" class="form-control" required />
+                <span asp-validation-for="ViewModel.DateOfBirth"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Gender"></label>
+                <select asp-for="ViewModel.Gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="ViewModel.Nationality"></span>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-success">Submit Staff</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+

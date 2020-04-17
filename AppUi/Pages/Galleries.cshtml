@@ -1,0 +1,40 @@
+﻿@page
+@model AppUi.Pages.GalleriesModel
+@{
+    ViewData["Title"] = "Galleries";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+    <link rel="stylesheet" href="~/css/gallery-clean.css" />
+
+<div class="container" style="margin-top:50px">
+    <h1>Our Gallery</h1>
+
+    <div class="tz-gallery">
+        <div class="row">
+            @if (Model.ViewModel.Galleries.Count > 0)
+            {
+                foreach (var item in Model.ViewModel.Galleries)
+                {
+                    <div class="col-lg-3 col-md-4 col-6">
+                        <div class="thumbnail">
+                            <a href="@Url.Page("/GalleryImage", new { Id = item.Id })" class="lightbox">
+                                <img class="img-fluid img-thumbnail" src="@Url.Page("/GalleryImage", new { Id = item.Id })" alt="">
+                            </a>
+                            <div class="caption">
+                                <h3>Description</h3>
+                                <p>@item.Description</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="col-12">
+                    <h2>Sorry! there are no items to view at the moment</h2>
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,58 @@
+﻿@model UpdateStudentRecordViewModel
+
+<form asp-page="/Admin/Children/UpdateRecords" method="post" role="form">
+    <div class="form-group">
+        <label>Student ID</label>
+        <input asp-for="ChildId" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label>Select Semester</label>
+        <select asp-for="SemesterId" class="form-control" required>
+            @if (Model.Semesters.Count > 0)
+            {
+                foreach (var sem in Model.Semesters) 
+                {
+                    <option value="@sem.Id">
+                        @sem.AcademicYear.Year | @sem.Title
+                    </option>
+                }
+            }
+            else
+            {
+                <option>There are no semesters to choose from</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Select Subject</label>
+        <select asp-for="SubjectId" class="form-control" required>
+            @if (Model.Subjects.Count > 0)
+            {
+                foreach (var sub in Model.Subjects) 
+                {
+                    <option value="@sub.Id">
+                        @sub.Name | @sub.Type
+                    </option>
+                }
+            }
+            else
+            {
+                <option>There are no subjects to choose from</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Class Score</label>
+        <input asp-for="ClassScore" class="form-control" max="30" min="0" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Exam Score</label>
+        <input asp-for="ExamScore" class="form-control" max="70" min="0" required/>
+    </div>
+
+    <button type="submit" class="btn btn-sm btn-primary">Submit Record</button>
+</form>

@@ -1,0 +1,89 @@
+﻿@page
+@model AppUi.Pages.Admin.BlogsModel
+
+@{
+    ViewData["Title"] = "Blogs";
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col">
+        @if (Model.ViewModel.Blogs.Count > 0)
+        {
+            <button class="btn btn-sm btn-info mb-4" data-toggle="modal" data-target="#newModal">Add a new one</button>
+
+            <ul class="list-group">
+                @foreach (var item in Model.ViewModel.Blogs)
+                {
+                    <li class="list-group-item">
+                        <span class="badge badge-info">@item.DateAdded.ToLongDateString()</span>
+                        @item.Title
+                        <a style="float:right" href="@Url.Page("/Admin/Blog", new { Id = item.Id })"><i class="fa fas fa-eye"></i></a>
+                    </li>
+                }
+            </ul>
+        }
+        else
+        {
+            <div style="text-align:center">
+                <i class="fa fas fa-bell" style="font-size:100px;"></i>
+                <h4>There are no blogs in store</h4>
+                <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#newModal">Add a new one</button>
+            </div>
+        }
+    </div>
+</div>
+
+@*add new modal box*@
+<div class="modal fade" id="newModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a new Story or Announcement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form enctype="multipart/form-data" method="post" role="form">
+                    <div class="form-group">
+                        <label asp-for="ViewModel.Title"></label>
+                        <input type="text" asp-for="ViewModel.Title" class="form-control" required />
+                        <span asp-validation-for="ViewModel.Title"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ViewModel.Introduction"></label>
+                        <textarea type="text" asp-for="ViewModel.Introduction" cols="10" rows="5" class="form-control" required></textarea>
+                        <span asp-validation-for="ViewModel.Introduction"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <img src="~/images/21104.png" class="img-fluid img-thumbnail" id="fileImage" />
+                        <input asp-for="ViewModel.Banner" class="form-control" hidden type="file" id="fileInput" />
+                        <button class="btn btn-sm btn-info" id="fileUpload" style="text-align:center">
+                            <i class="fa fas fa-file mr-4"></i>
+                            Upload a Banner
+                        </button>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fa fas fa-send-o md-4"></i>
+                        Add Story or Announcement
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+

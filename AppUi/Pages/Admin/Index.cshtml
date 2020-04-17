@@ -5,4 +5,138 @@
     Layout = "_AdminLayout";
 }
 
-<h3>Home Screen for Admin</h3>
+
+<div class="card" style="border-left:solid 5px blue">
+    <h3 class="card-title">All Unactivated Support Requests</h3>
+    <div class="card-body">
+        @if (Model.ViewModel.Requests.Count > 0)
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Child</th>
+                            <th>Child Date of Birth</th>
+                            <th>Application User</th>
+                            <th>User Nationality</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.ViewModel.Requests) 
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@Url.Page("/ChildImage", new { Id = item.ChildId })" class="rounded-circle" width="50" height="50"/>
+                                    <span>@item.Child.Fullname</span>
+                                </td>
+
+                                <td>@item.Child.DateOfBirth.ToLongDateString()</td>
+                                <td>
+                                    <img src="@Url.Page("/UserImage", new { Id = item.ApplicationUserId })" class="rounded-circle" width="50" height="50"/>
+                                    <span>@item.ApplicationUser.Name</span>
+                                </td>
+                                <td>@item.ApplicationUser.Nationality</td>
+                                <td>
+                                    <a href="@Url.Page("/Admin/Children/ActivateSupport", new { Id = item.ChildId })"></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h2>There are no unactivated requests at the moment!</h2>
+        }
+    </div>
+</div>
+
+<div class="card mt-5" style="border-left:solid 5px yellow">
+    <h3 class="card-title">All Unread Letters</h3>
+    <div class="card-body">
+        @if (Model.ViewModel.Letters.Count > 0)
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Date Written</th>
+                            <th>Title</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.ViewModel.Letters) 
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@Url.Page("/UserImage", new { Id = item.ApplicationUserId })"/>
+                                    <span>@item.ApplicationUser.Name</span>
+                                </td>
+                                <td>
+                                    <img src="@Url.Page("/ChildImage", new { Id = item.ChildId })" class="rounded-circle" width="40" height="40" />
+                                    <span>@item.Child.Fullname</span>
+                                </td>
+                                <td>@item.DateWritten.ToLongDateString()</td>
+                                <td>@item.Title</td>
+                                <td>
+                                    <a href="@Url.Page("/Admin/Child/Letter", new { Id = item.Id })" class="btn btn-link">View</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h2>There are no letters at the moment!</h2>
+        }
+    </div>
+</div>
+
+<div class="card mt-5" style="border-left:solid 5px green">
+    <h3 class="card-title">All Pending Visitations</h3>
+    <div class="card-body">
+        @if (Model.ViewModel.Visitations.Count > 0)
+        {
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Arrival Date</th>
+                            <th>Leaving Date</th>
+                            <th>Date Scheduled</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.ViewModel.Visitations) 
+                        {
+                            <tr>
+                                <td>
+                                    <img src="@Url.Page("/UserImage", new { Id = item.UserId })" class="rounded-circle" width="40" height="40"/>
+                                    <span>@item.ApplicationUser.Name</span>
+                                </td>
+                                <td>@item.ReportingDate.ToLongDateString()</td>
+                                <td>@item.LeavingDate.ToLongDateString()</td>
+                                <td>@item.DateAdded.ToLongDateString()</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <h2>There are no pending visitations at the moment!</h2>
+        }
+    </div>
+</div>

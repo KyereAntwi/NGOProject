@@ -13,5 +13,6 @@ namespace AppModels.DTO
         public string Type { get; set; }
 
         public virtual ICollection<ClassSubject> Classes { get; set; }
+        public virtual ICollection<SemesterRegistration> Registrations { get; set; }
     }
 }

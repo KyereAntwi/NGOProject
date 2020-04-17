@@ -17,6 +17,10 @@ namespace AppModels.DTO
         [ForeignKey(nameof(SemesterId))]
         public Semester Semester { get; set; }
 
+        public Guid SubjectId { get; set; }
+        [ForeignKey(nameof(SubjectId))]
+        public Subject Subject { get; set; }
+
         public DateTime DateAdded { get; set; }
 
         public double ClassScore { get; set; }

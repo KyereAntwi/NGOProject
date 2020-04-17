@@ -25,13 +25,13 @@ namespace AppUi.ViewComponents
 
             try
             {
-                var loggedUser = await _userManager.FindByIdAsync(userId);
+                var loggedUser = await _userManager.FindByIdAsync(userId.ToString());
                 if (loggedUser != null) 
                 {
                     viewModel.User = new ApplicationUser();
                     viewModel.Identity = new IdentityUser();
 
-                    var response = await _userServices.GetUserAsync(userId);
+                    var response = await _userServices.GetUserByUserIdAsync(userId);
 
                     if (response != null) 
                     {

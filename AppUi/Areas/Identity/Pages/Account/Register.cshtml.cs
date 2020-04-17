@@ -60,6 +60,11 @@ namespace AppUi.Areas.Identity.Pages.Account
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
+
+            [DataType(DataType.PhoneNumber)]
+            [Display(Name = "Active Mobile Number")]
+            [StringLength(15, MinimumLength = 10, ErrorMessage = "Phone number should not be less than 10 characters")]
+            public string PhoneNumber { get; set; }
         }
 
         public async Task OnGetAsync(string returnUrl = null)
@@ -74,13 +79,13 @@ namespace AppUi.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-
-                    var roleResponse = await _userManager.AddToRoleAsync(user, "Volunteer");
+                    var newUser = await _userManager.FindByEmailAsync(user.Email);
+                    var roleResponse = await _userManager.AddToRoleAsync(newUser, "Volunteer");
                     if (roleResponse.Succeeded) 
                     {
                         _logger.LogInformation("User added to volunteer role");
@@ -103,7 +108,7 @@ namespace AppUi.Areas.Identity.Pages.Account
                         else
                         {
                             await _signInManager.SignInAsync(user, isPersistent: false);
-                            return LocalRedirect(returnUrl);
+                            return RedirectToPage("/Volunteer/Biography", new { UserId = newUser.Id });
                         }
                     }
                 }

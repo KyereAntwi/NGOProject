@@ -1,0 +1,82 @@
+﻿@page
+@model AppUi.Pages.Admin.Children.AddModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="row">
+    <div class="col-8 offset-2">
+        <form enctype="multipart/form-data" method="post">
+            <h4>Add a new Child</h4>
+            <div class="divider"></div>
+
+            <div class="form-group">
+                @if (Model.Id == Guid.Empty)
+                {
+                    <img src="~/images/21104.png" class=" rounded-circle" style="text-align:center" width="100" height="100" id="fileImage" />
+                }
+                else
+                {
+                    <img src="@Url.Page("/ChildImage", new { Id = Model.Id })" class="rounded-circle" style="text-align:center" width="100" height="100" id="fileImage" />
+                }
+                <input asp-for="ViewModel.Photograph" class="form-control" hidden type="file" id="fileInput" />
+                <button class="btn btn-sm btn-info" id="fileUpload" style="text-align:center">
+                    <i class="fa fas fa-file mr-4"></i>
+                    Upload a photograph
+                </button>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.GivingName"></label>
+                <input asp-for="ViewModel.GivingName" class="form-control" required />
+                <span asp-validation-for="ViewModel.GivingName"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Othernames"></label>
+                <input asp-for="ViewModel.Othernames" class="form-control" />
+                <span asp-validation-for="ViewModel.Othernames"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Surname"></label>
+                <input asp-for="ViewModel.Surname" class="form-control" required />
+                <span asp-validation-for="ViewModel.Surname"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Nationality"></label>
+                <input asp-for="ViewModel.Nationality" class="form-control" required />
+                <span asp-validation-for="ViewModel.Nationality"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.DateOfBirth"></label>
+                <input asp-for="ViewModel.DateOfBirth" class="form-control" required />
+                <span asp-validation-for="ViewModel.DateOfBirth"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Teaser"></label>
+                <textarea asp-for="ViewModel.Teaser" class="form-control" maxlength="100" rows="6" required></textarea>
+                <span asp-validation-for="ViewModel.Teaser"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Gender"></label>
+                <select asp-for="ViewModel.Gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="ViewModel.Nationality"></span>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-success">Submit Child</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

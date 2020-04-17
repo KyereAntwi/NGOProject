@@ -14,5 +14,7 @@ namespace AppModels.DTO
         public Guid ApplicationUserId { get; set; }
         [ForeignKey(nameof(ApplicationUserId))]
         public ApplicationUser ApplicationUser { get; set; }
+
+        public bool Accepted { get; set; }
     }
 }

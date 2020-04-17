@@ -1,0 +1,111 @@
+﻿@page
+@model AppUi.Pages.Volunteer.VisitationsModel
+@{
+    ViewData["Title"] = "Visitations";
+    Layout = "~/Pages/Shared/_VolunteerLayout.cshtml";
+}
+
+<h1>Your Visitations <span><button data-toggle="modal" data-target="#newModal" class="ml-4 btn btn-sm btn-secondary" title="Book a new visitation"><i class="fa fas fa-plus"></i></button></span></h1>
+
+@if (Model.ViewModel.Visitations.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Date of Arrival</th>
+                    <th>Date of Departure</th>
+                    <th>Visitation Status</th>
+                    <td>Canceled?</td>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var trip in Model.ViewModel.Visitations)
+                {
+                    <tr>
+                        <td><i class="fa fas fa-plane"></i></td>
+                        <td>@trip.ReportingDate.ToLongDateString()</td>
+                        <td>@trip.LeavingDate.ToLongDateString()</td>
+                        <td>
+                            @if (!trip.Done)
+                            {
+                                <p class="badge badge-pill badge-success">Not Done</p>
+                            }
+                            else
+                            {
+                                <p class="badge badge-pill badge-success">Done</p>
+                            }
+                        </td>
+                        <td>
+                            @if (trip.Cancelled)
+                            {
+                                <p>Canceled | <span><i class="fa fas fa-check text-warning"></i></span></p>
+                            }
+                            else
+                            {
+                                <p>Not Canceled | <span><i class="fa fas fa-check text-success"></i></span></p>
+                            }
+                        </td>
+                        <td>
+                            @if (!trip.Done && trip.ReportingDate < DateTime.Now)
+                            {
+                                <a class="btn btn-link" title="This would cancel this trip altogether" href="@Url.Page("/Volunteer/CancelVisit", new { Id = trip.Id })">Cancel Trip</a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <i class="fa fas fa-plane-arrival" style="font-size:200px"></i>
+            <h4>There are no visitations scheduled or made yet</h4>
+        </div>
+    </div>
+}
+
+@*add new modal box*@
+<div class="modal fade" id="newModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Schedule a new visitation</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" role="form">
+                    <div class="form-group">
+                        <label>Reporting Date</label>
+                        <input type="date" asp-for="ViewModel.ReportingDate" placeholder="What date do you want to report" class="form-control" required />
+                        <span asp-validation-for="ViewModel.ReportingDate"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Leaving Date</label>
+                        <input type="date" asp-for="ViewModel.LeavingDate" placeholder="What date do you want to leave" class="form-control" required />
+                        <span asp-validation-for="ViewModel.LeavingDate"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fa fas fa-send-o md-4"></i>
+                        Submit Visitation
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

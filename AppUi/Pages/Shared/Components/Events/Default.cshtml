@@ -1,0 +1,32 @@
+﻿@model EventsViewModel
+
+@if (Model.Events.Count > 0)
+{
+    <div class="row mt-5">
+        <div class="col-12" style="text-align:center; font-family:'Segoe UI'">
+            <h1>Upcoming Events</h1>
+            <hr />
+        </div>
+    </div>
+
+    @foreach (var item in Model.Events)
+    {
+        <div class="row mt-1">
+            <div class="col-md-5 col-sm-12">
+                @if (item.Banner != null)
+                {
+                    <img class="img-thumbnail img-fluid" src="@Url.Page("/EventImage", new { Id = item.Id })" />
+                }
+            </div>
+
+            <div class="col-md-6 offset-1 col-sm-12">
+                <h2>@item.Theme</h2>
+                <h4>@item.Details</h4>
+
+                <h4>Date Starting: @item.StartingDate.ToLongDateString()</h4>
+                <h4>Date Ending: @item.EndingDate.ToLongDateString()</h4>
+            </div>
+        </div>
+        <hr />
+    }
+}

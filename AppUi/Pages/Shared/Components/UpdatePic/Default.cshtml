@@ -1,0 +1,23 @@
+﻿@model UpdatePictureViewModel
+
+<form enctype="multipart/form-data" method="post" asp-page="/Accounts/UpdatePicture">
+    <div class="form-group">
+        <input class="form-control" asp-for="Id" readonly />
+    </div>
+
+    <div class="form-group">
+        <img src="~/images/21104.png" class="img-fluid" style="border-radius: 50%; text-align:center" width="100" height="100" id="fileImage" />
+        <input asp-for="Photograph" class="form-control" hidden type="file" id="fileInput" />
+        <button class="btn btn-sm btn-info" id="fileUpload" style="text-align:center">
+            <i class="fa fas fa-file mr-4"></i>
+            Upload a photograph
+        </button>
+    </div>
+
+    <button class="btn btn-sm btn-info" type="submit">Submit Picture</button>
+</form>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

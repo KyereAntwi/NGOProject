@@ -1,0 +1,124 @@
+﻿@page
+@model AppUi.Pages.Admin.BlogModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Blog Details";
+}
+
+<div class="row">
+    <div class="col">
+        @if (Model.ViewModel.Blog.Banner != null)
+        {
+            <div class="jumbotron" style="color:white; background-image:url('@Url.Page("/StoryImage", new { Id = Model.ViewModel.Blog.Id })'); background-size:cover; background-repeat:no-repeat;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h2>@Model.ViewModel.Blog.Title</h2>
+                            <p>@Model.ViewModel.Blog.Introduction</p>
+                            <button class="btn btn-circle btn-lg btn-success" data-toggle="modal" data-target="#newSubModal" title="Add a Sub to this story or announcement">
+                                <i class="fa fas fa-plus"></i>
+                            </button>
+                            <button class="btn btn-circle btn-lg btn-danger" data-toggle="modal" data-target="#deleteModal" title="Delete completely this story or announcement">
+                                <i class="fa fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="jumbotron" style="background-color:cadetblue; color:white">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <h2>@Model.ViewModel.Blog.Title</h2>
+                            <p>@Model.ViewModel.Blog.Introduction</p>
+                            <button class="btn btn-circle btn-lg btn-success" data-toggle="modal" data-target="#newSubModal" title="Add a Sub to this story or announcement">
+                                <i class="fa fas fa-plus"></i>
+                            </button>
+                            <button class="btn btn-circle btn-lg btn-danger" data-toggle="modal" data-target="#deleteModal" title="Delete completely this story or announcement">
+                                <i class="fa fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.ViewModel.Blog.Subs.Count > 0)
+        {
+            foreach (var item in Model.ViewModel.Blog.Subs)
+            {
+                <div class="card mb-2" style="border-left: solid 5px blue">
+                    <div class="card-body">
+                        <p>@item.Details</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@*add new sub modal box*@
+<div class="modal fade" id="newSubModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newSubModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a Sub Detail</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" role="form">
+                    <div class="form-group">
+                        <label asp-for="ViewModel.SubTitle"></label>
+                        <input type="text" asp-for="ViewModel.SubTitle" class="form-control" required />
+                        <span asp-validation-for="ViewModel.SubTitle"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ViewModel.SubDetails"></label>
+                        <textarea type="text" asp-for="ViewModel.SubDetails" rows="5" cols="10" class="form-control" required></textarea>
+                        <span asp-validation-for="ViewModel.SubDetails"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fa fas fa-send-o md-4"></i>
+                        Add Sub Detail
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*add new sub modal box*@
+<div class="modal fade" id="deleteModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Caution</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <p>Are you sure you want to continue to delete this Blog?</p>
+                <a class="btn btn-danger btn-sm" href="@Url.Page("/DeleteBlog", new { Id = Model.ViewModel.Blog.Id })">Continue to delete!</a>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

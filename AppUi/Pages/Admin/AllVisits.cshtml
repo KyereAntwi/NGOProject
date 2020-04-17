@@ -1,0 +1,71 @@
+﻿@page
+@model AppUi.Pages.Admin.AllVisitsModel
+@{
+    ViewData["Title"] = "All Visitations";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@if (Model.Visitations.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Application User</th>
+                    <th>Date of Arrival</th>
+                    <th>Date of Departure</th>
+                    <th>Visitation Status</th>
+                    <td>Canceled?</td>
+                    <th>Date Scheduled</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var trip in Model.Visitations)
+                {
+                    <tr>
+                        <td><i class="fa fas fa-plane"></i></td>
+                        <td>
+                            <img class="rounded-circle" width="40" height="40" src="@Url.Page("/UserImage", new { Id = trip.UserId })"/>
+                            <span>@trip.ApplicationUser.Name</span>
+                        </td>
+                        <td>@trip.ReportingDate.ToLongDateString()</td>
+                        <td>@trip.LeavingDate.ToLongDateString()</td>
+                        <td>
+                            @if (!trip.Done)
+                            {
+                                <p class="badge badge-pill badge-success">Not Done</p>
+                            }
+                            else
+                            {
+                                <p class="badge badge-pill badge-success">Done</p>
+                            }
+                        </td>
+                        <td>
+                            @if (trip.Cancelled)
+                            {
+                                <p>Canceled | <span><i class="fa fas fa-check text-warning"></i></span></p>
+                            }
+                            else
+                            {
+                                <p>Not Canceled | <span><i class="fa fas fa-check text-success"></i></span></p>
+                            }
+                        </td>
+                        <td>@trip.DateAdded.ToLongDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <i class="fa fas fa-plane-arrival" style="font-size:200px"></i>
+            <h4>There are no visitations scheduled or made yet</h4>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,33 @@
+﻿@model StoriesNavViewModel
+
+@if (Model.Total > 0)
+{
+    <li class="nav-item dropdown no-arrow mx-1">
+        <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Stories
+        </a>
+        <!-- Dropdown - Alerts -->
+        <div class="dropdown-list dropdown-menu dropdown-menu-left shadow animated--grow-in" 
+             aria-labelledby="alertsDropdown"
+             style="min-width:500px; max-width:500px">
+            <h6 class="dropdown-header">
+                Stories and Announcements
+            </h6>
+
+            @foreach (var item in Model.Anouncements)
+            {
+                <a class="dropdown-item d-flex align-items-center" href="@Url.Page("/Story", new { Id = item.Id })">
+                    <div>
+                        <div class="small text-gray-500">@item.DateAdded.ToLongDateString()</div>
+                        <span class="font-weight-bold text-wrap">@item.Title</span>
+                    </div>
+                </a>
+            }
+
+            @if (Model.Total > 4)
+            {
+                <a class="dropdown-item text-center small text-gray-500" asp-page="/Stories">Show All Stories and Announcements</a>
+            }
+        </div>
+    </li>
+}

@@ -1,0 +1,32 @@
+﻿@model UpdateChildClassViewModel
+
+
+
+@if (Model.Classes.Count > 0)
+{
+    <form asp-page="/Admin/Children/UpdateClass" method="post" role="form">
+        <div class="form-group">
+            <input asp-for="ChildId" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+            <label asp-for="CalssId"></label>
+            <select asp-for="CalssId" class="form-control">
+                @foreach (var item in Model.Classes)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+
+        <button class="btn btn-sm btn-info" type="submit">Submit class</button>
+    </form>
+}
+else
+{
+    <div class="row">
+        <div class="col-12">
+            <h4>There are no classes to select from!</h4>
+        </div>
+    </div>
+}

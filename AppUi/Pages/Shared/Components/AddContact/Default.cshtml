@@ -1,0 +1,46 @@
+﻿@model AddContactViewModel
+
+<form asp-page="/Accounts/AddContact" method="post" role="form">
+    <div class="form-group">
+        <label>Type of Contact (required)</label>
+        <select class="form-control" required asp-for="Type">
+            <option value="Personal">Personal Contact</option>
+            <option value="Home">Home Contact</option>
+            <option value="Office">Office Contact</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Address 1 (required)</label>
+        <input asp-for="Address1" class="form-control" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Address 2 (optional)</label>
+        <input asp-for="Address2" class="form-control"/>
+    </div>
+
+    <div class="form-group">
+        <label>Street (required)</label>
+        <input asp-for="Street" class="form-control" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Country (required)</label>
+        <input asp-for="Country" class="form-control" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Zipcode (required)</label>
+        <input asp-for="Zipcode" class="form-control" required/>
+    </div>
+
+    <div class="form-group">
+        <label>Telephone (required)</label>
+        <input asp-for="Telephone" class="form-control"/>
+    </div>
+
+    <input asp-for="UserId" hidden/>
+
+    <button type="submit" class="btn btn-sm btn-primary">Submit Contact</button>
+</form>

@@ -1,0 +1,57 @@
+﻿@page
+@model AppUi.Pages.Admin.VolunteersModel
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@if (Model.ViewModel.Volunteers.Count > 0)
+{
+    <div class="table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Photograph</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Date Added</th>
+                    <th>Nationality</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var vol in Model.ViewModel.Volunteers) 
+                {
+                    <tr>
+                        <td>
+                            @if (vol.Photograph != null)
+                            {
+                                <img class="rounded-circle" src="@Url.Page("/UserImage", new { Id = vol.Id })" width="40" height="40" />
+                            }
+                            else
+                            {
+                                <img class="rounded-circle" src="~/images/21104.png" width="40" height="40" />
+                            }
+                        </td>
+                        <td>@vol.Name</td>
+                        <td>@vol.Gender</td>
+                        <td>@vol.DateAdded.ToLongDateString()</td>
+                        <td>@vol.Nationality</td>
+                        <td>
+                            <a href="@Url.Page("/Admin/Volunteer", new { Id = vol.Id })">
+                                <i class="fa fas fa-door-open text-info"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else 
+{
+    <div class="col-12" style="text-align:center">
+        <i class="fa fas fa-user" style="font-size:100px"></i>
+        <p>There are no volunteers yet registered!</p>
+    </div>
+}
+

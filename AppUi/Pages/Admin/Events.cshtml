@@ -1,0 +1,150 @@
+﻿@page
+@model AppUi.Pages.Admin.EventsModel
+
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Events and Missions";
+}
+
+<div class="row">
+    <div class="col-12">
+        <button data-toggle="modal" data-target="#newModal" class="btn btn-sm btn-info">Create an Event or Mission</button>
+    </div>
+</div>
+
+<div class="row mt-4">
+    @if (Model.ViewModel.Events.Count > 0)
+    {
+        foreach (var item in Model.ViewModel.Events)
+        {
+            <div class="col">
+                <div class="card d-block" style="width:18rem">
+                    @if (item.Banner != null)
+                    {
+                        <img class="card-img-top" src="@Url.Page("/EventImage", new { Id = item.Id })" />
+                    }
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <h3 class="card-title">@item.Theme</h3>
+
+                            @if (item.DateAdded < DateTime.Now)
+                            {
+                                <p class="badge badge-pill badge-success">Pending | <span>@item.DateAdded.ToShortDateString()</span></p>
+                            }
+                            else
+                            {
+                                <p class="badge badge-pill badge-warning">Past | <span>@item.DateAdded.ToShortDateString()</span></p>
+                            }
+
+                            <table class="table table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fa fas fa-calendar" title="Starting Date"></i></td>
+                                        <td>@item.StartingDate.ToLongDateString()</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fas fa-clock" title="Starting Time"></i></td>
+                                        <td>@item.StartingTime.ToLongTimeString()</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fa fas fa-calendar" title="Ending Date"></i></td>
+                                        <td>@item.StartingTime.ToLongTimeString()</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <a class="btn btn-danger" href="@Url.Page("/Admin/DeleteEvent", new { Id = item.Id })">Delete Event</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="col-12" style="text-align:center">
+            <i class="fa fas fa-calendar" style="font-size:200px;"></i>
+            <h4>There are no events created at the moment!</h4>
+        </div>
+    }
+</div>
+
+@*add new modal box*@
+<div class="modal fade" id="newModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a new Event</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form enctype="multipart/form-data" method="post" role="form">
+                    <div class="card">
+                        <img src="~/images/21104.png" class="card-img-top" id="fileImage" />
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input asp-for="ViewModel.Banner" class="form-control" hidden type="file" id="fileInput" />
+                                <button class="btn btn-sm btn-info" id="fileUpload" style="text-align:center">
+                                    <i class="fa fas fa-file mr-4"></i>
+                                    Upload a Banner
+                                </button>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ViewModel.Theme"></label>
+                                <input type="text" asp-for="ViewModel.Theme" class="form-control" required />
+                                <span asp-validation-for="ViewModel.Theme"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ViewModel.Details"></label>
+                                <textarea type="text" asp-for="ViewModel.Details" class="form-control" required></textarea>
+                                <span asp-validation-for="ViewModel.Details"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ViewModel.StartingDate"></label>
+                                <input type="date" asp-for="ViewModel.StartingDate" class="form-control" required />
+                                <span asp-validation-for="ViewModel.StartingDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ViewModel.EndingDate"></label>
+                                <input type="date" asp-for="ViewModel.EndingDate" class="form-control" required />
+                                <span asp-validation-for="ViewModel.EndingDate"></span>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="ViewModel.StartingTime"></label>
+                                <input type="time" asp-for="ViewModel.StartingTime" class="form-control" required />
+                                <span asp-validation-for="ViewModel.StartingTime"></span>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-block btn-success">
+                                Add Event
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}
+

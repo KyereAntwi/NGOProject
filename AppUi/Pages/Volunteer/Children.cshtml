@@ -1,0 +1,37 @@
+﻿@page
+@model AppUi.Pages.Volunteer.ChildrenModel
+
+@{
+    ViewData["Title"] = "Support a child";
+    Layout = "_VolunteerLayout";
+}
+
+<div class="row">
+    @if (Model.ViewModel.Children.Count > 0)
+    {
+        foreach (var item in Model.ViewModel.Children)
+        {
+            <div class="col">
+                <div class="card d-block" style="width:16rem">
+                    <img src="@Url.Page("/ChildImage", new { Id = item.Id })" class="card-img-top"/>
+                    <div class="card-body">
+                        <h3 class="card-title">@item.GivingName</h3>
+                        <h6 class="card-subtitle">@item.Fullname</h6>
+
+                        <p>Date of Birth: <span><b>@item.DateOfBirth.ToLongDateString()</b></span></p>
+                    </div>
+                    <div class="card-footer">
+                        <a class="btn btn-block btn-secondary" href="@Url.Page("/Volunteer/PreviewChild", new { Id = item.Id })">Choose Me</a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else 
+    {
+        <div class="col">
+            <i class="fa fas fa-user" style="font-size:200px"></i>
+            <h3>Sorry! there are no children waiting at the moment to support</h3>
+        </div>
+    }
+</div>

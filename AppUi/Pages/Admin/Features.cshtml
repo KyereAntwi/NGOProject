@@ -1,0 +1,103 @@
+﻿@page
+@model AppUi.Pages.Admin.FeaturesModel
+@{
+    ViewData["Title"] = "Features";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+@if (Model.ViewModel.Features.Count > 0)
+{
+    <div class="row">
+        <div class="col-12">
+            <button class="btn btn-sm btn-info" data-target="#newModal" data-toggle="modal">Add a new feature</button>
+        </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="table-responsive mt-4">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Date Added</th>
+                    <th>Is Disability?</th>
+                    <td></td>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.ViewModel.Features) 
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.DateAdded.ToLongDateString() | @item.DateAdded.ToLongTimeString()</td>
+                        @if (item.Disability)
+                        {
+                            <td><i class="fa fas fa-check-circle text-success"></i></td>
+                        }
+                        else 
+                        {
+                            <td><i class="fa fas fa-times-circle text-warning"></i></td>
+                        }
+                        <td>
+                            <a href="@Url.Page("/Admin/Feature", new { Id = item.Id })">
+                                <i class="fa fas fa-door-open text-info"></i>
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="col-12" style="text-align: center">
+        <i class="fa fas fa-accessible-icon" style="color:cornflowerblue; font-size: 200px"></i>
+        <p>There are no features saved yet!</p>
+        <button class="btn btn-sm btn-info" data-target="#newModal" data-toggle="modal">Start by adding the first one</button>
+    </div>
+}
+
+@*add new modal box*@
+<div class="modal fade" id="newModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="newModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a new Feature</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form method="post" role="form">
+                    <div class="form-group">
+                        <label asp-for="ViewModel.Title"></label>
+                        <input type="text" asp-for="ViewModel.Title" class="form-control" required />
+                        <span asp-validation-for="ViewModel.Title"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="ViewModel.Disability"></label>
+                        <input type="checkbox" asp-for="ViewModel.Disability" class="form-control" />
+                        <span asp-validation-for="ViewModel.Disability"></span>
+                    </div>
+
+                    <button type="submit" class="btn btn-block btn-success">
+                        <i class="fa fas fa-send-o md-4"></i>
+                        Add Feature
+                    </button>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

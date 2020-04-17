@@ -1,0 +1,58 @@
+﻿@page
+@model AppUi.Pages.Volunteer.LettersModel
+@{
+    ViewData["Title"] = "Letters";
+    Layout = "~/Pages/Shared/_VolunteerLayout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col">
+        <h1>Your Letters <span class="ml-4"><a asp-page="/Volunteer/WriteLetter" class="btn btn-secondary" title="Write a new Letter"><i class="fa fas fa-plus"></i></a></span></h1>
+    </div>
+</div>
+
+
+
+@if (Model.Letters != null)
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Child</th>
+                    <th>Letter Title</th>
+                    <th>Date and Time Written</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Letters)
+                {
+                    <tr>
+                        <td>
+                            <img class="img-fluid rounded-circle" width="40" height="40" />
+                            <span>@item.Child.Fullname</span>
+                        </td>
+                        <td>@item.Title</td>
+                        <td>@item.DateWritten.ToLongDateString() | @item.DateWritten.ToLongTimeString()</td>
+                        <td>
+                            <a href="@Url.Page("/Volunteer/Letter", new { Id = item.Id })">View Detail</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else 
+{
+    <div class="row">
+        <div class="col" style="text-align: center">
+            <i class="fa fas fa-envelope" style="font-size: 200px"></i>
+            <h3>There are no letters written so far!</h3>
+        </div>
+    </div>
+}
+

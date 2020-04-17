@@ -1,0 +1,47 @@
+﻿@page
+@model AppUi.Pages.Volunteer.BiographyModel
+@{
+}
+
+<div class="row" style="margin-top:70px">
+    <div class="col-6 offset-3">
+        <form method="post">
+            <h4>Update Biography</h4>
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Name"></label>
+                <input asp-for="ViewModel.Name" class="form-control" required />
+                <span asp-validation-for="ViewModel.Name"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Nationality"></label>
+                <input asp-for="ViewModel.Nationality" class="form-control" required />
+                <span asp-validation-for="ViewModel.Nationality"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.DateOfBirth"></label>
+                <input asp-for="ViewModel.DateOfBirth" class="form-control" required />
+                <span asp-validation-for="ViewModel.DateOfBirth"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ViewModel.Gender"></label>
+                <select asp-for="ViewModel.Gender" class="form-control">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="ViewModel.Gender"></span>
+            </div>
+
+            <button type="submit" class="btn btn-block btn-success">Submit Biography</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

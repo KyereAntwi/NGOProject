@@ -1,0 +1,60 @@
+﻿@page
+@model AppUi.Pages.Admin.StaffModel
+@{
+    ViewData["Title"] = "Staff";
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-5">
+    <div class="card" style="width: 18rem;">
+        @if (Model.ViewModel.AppUser.Photograph == null)
+        {
+            <img src="~/images/21104.png" class="card-img-top" alt="" />
+        }
+        else
+        {
+            <img src="@Url.Action("", "", new { Id = Model.ViewModel.AppUser.Id })" class="card-img-top" alt="" />
+        }
+
+        <div class="card-body">
+            <h5 class="card-title">@Model.ViewModel.AppUser.Name</h5>
+            <div class="table-responsive">
+                <table class="table-borderless">
+                    <tbody>
+                        <tr>
+                            <td><i class="fa fas fa-envelope"></i></td>
+                            <td><strong>@Model.ViewModel.User.Email.ToUpper()</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fa fas fa-mobile"></i></td>
+                            <td><strong>@Model.ViewModel.User.PhoneNumber</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-6 offset-1">
+    <ul class="nav nav-pills nav-fill" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="pill" href="#timelines" role="tab" aria-controls="home" aria-selected="true">Activities <span class="badge badge-info ml-4">@Model.ViewModel.TimeLines.Count</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#biography">Biography</a>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="tabContent">
+        <div class="tab-pane fade show active" id="timelines" role="tabpanel" aria-labelledby="timelines-tab">
+            <h5>The time lines</h5>
+        </div>
+
+        <div class="tab-pane fade" id="biography" role="tabpanel" aria-labelledby="timelines-tab">
+            <h5>Biography</h5>
+        </div>
+    </div>
+</div>
+

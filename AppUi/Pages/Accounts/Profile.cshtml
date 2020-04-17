@@ -1,0 +1,261 @@
+﻿@page
+@model AppUi.Pages.Accounts.ProfileModel
+@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container" style="margin-top: 90px">
+    <div class="row">
+        <div class="col-12">
+            @if (TempData["Success"] != null)
+            {
+                <div class="alert alert-success alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @TempData["Success"]
+                </div>
+            }
+            else if (TempData["Failed"] != null)
+            {
+                <div class="alert alert-danger alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @TempData["Failed"]
+                </div>
+            }
+            else if (TempData["Warning"] != null)
+            {
+                <div class="alert alert-warning alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert"
+                            aria-hidden="true">
+                        &times;
+                    </button>
+                    @TempData["Warning"]
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 col-sm-12">
+            <div class="card" style="width:19rem;">
+                @if (Model.ViewModel.User.Photograph != null)
+                {
+                    <img class="img-fluid card-img-top" src="@Url.Page("/UserImage", new { Id = Model.ViewModel.User.Id })" />
+                }
+                else
+                {
+                    <img class="img-fluid card-img-top" src="~/images/21104.png" />
+                }
+                <div class="card-footer">
+                    <button class="btn btn-info btn-sm" data-target="#updatePicture" data-toggle="modal"><i class="fa fas fa-image mr-2"></i>Change Profile Picture</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8 col-sm-12">
+            <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="nav-bio-tab" data-toggle="tab" href="#nav-bio" role="tab" aria-controls="nav-bio" aria-selected="true">
+                        Biography Details
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-contacts-tab" data-toggle="tab" href="#nav-contacts" role="tab" aria-controls="nav-contacts" aria-selected="false">
+                        Contacts List
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="nav-reset-tab" data-toggle="tab" href="#nav-reset" role="tab" aria-controls="nav-reset" aria-selected="false">
+                        Reset Password
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Operations</a>
+                    <div class="dropdown-menu">
+                        <p class="dropdown-header">Other Updates</p>
+                        <a href="@Url.Page("/Volunteer/Biography", new { UserId = Model.ViewModel.User.UserId })" class="dropdown-item">Update Personal Biography</a>
+                        <a href="#" data-toggle="modal" data-target="#contactModal" class="dropdown-item">Add a contact to contact list</a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" data-toggle="modal" data-target="#delete" class="dropdown-item text-danger">Delete account</a>
+                    </div>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="nav-bio" role="tabpanel" aria-labelledby="nav-bio-tab">
+
+                    <ul class="list-group mt-5">
+                        <li class="list-group-item">
+                            <span><i class="fa fas fa-envelope"></i></span>
+                            @Model.ViewModel.Identity.Email.ToUpper()
+                            <p class="badge badge-warning">unchangeable</p>
+                        </li>
+                        <li class="list-group-item">
+                            <span><i class="fa fas fa-phone"></i></span>
+                            Active Mobile: @Model.ViewModel.Identity.PhoneNumber
+                            <p class="badge badge-info">changeable</p>
+                        </li>
+                        <li class="list-group-item">
+                            <span><i class="fa fas fa-calendar"></i></span>
+                            Account Registration Date: @Model.ViewModel.User.DateAdded.ToLongDateString() and Time: @Model.ViewModel.User.DateAdded.ToLongTimeString()
+                            <p class="badge badge-warning">unchangeable</p>
+                        </li>
+                    </ul>
+
+                    <ul class="list-group mt-5">
+                        <li class="list-group-item">
+                            Name: <b>@Model.ViewModel.User.Name.ToUpper()</b>
+                            <p class="badge badge-info">changeable</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            Gender: <b>@Model.ViewModel.User.Gender.ToUpper()</b>
+                            <p class="badge badge-info">changeable</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            Date of Birth: <b>@Model.ViewModel.User.DateOfBirth.ToLongDateString()</b>
+                            <p class="badge badge-info">changeable</p>
+                        </li>
+
+                        <li class="list-group-item">
+                            Nationality: <b>@Model.ViewModel.User.Nationality.ToUpper()</b>
+                            <p class="badge badge-info">changeable</p>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="tab-pane fade" id="nav-contacts" role="tabpanel" aria-labelledby="nav-contacts-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Address 1</th>
+                                    <th>Address 2</th>
+                                    <th>Street and Country</th>
+                                    <th>Zipcode</th>
+                                    <th>Telephone</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.ViewModel.User.Contacts) 
+                                {
+                                    <tr>
+                                        <td>@item.Type</td>
+                                        <td>@item.Address1</td>
+                                        <td>@item.Address2</td>
+                                        <td>@item.Street and @item.Country</td>
+                                        <td>@item.Zipcode</td>
+                                        <td>@item.Telephone</td>
+                                        <td><a href="@Url.Page("/Accounts/DeleteContact", new { Id = item.Id })">Delete</a></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="nav-reset" role="tabpanel" aria-labelledby="nav-reset-tab">
+                    <form method="post" role="form">
+                        <div class="form-group">
+                            <label asp-for="ChangePassword.OldPassword"></label>
+                            <input asp-for="ChangePassword.OldPassword" maxlength="100" min="8" type="password" class="form-control" required />
+                            <span asp-validation-for="ChangePassword.OldPassword"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ChangePassword.NewPassword"></label>
+                            <input asp-for="ChangePassword.NewPassword" maxlength="100" min="8" type="password" class="form-control" required />
+                            <span asp-validation-for="ChangePassword.NewPassword"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ChangePassword.ConfirmPassword"></label>
+                            <input asp-for="ChangePassword.ConfirmPassword" maxlength="100" min="8" type="password" class="form-control" required />
+                            <span asp-validation-for="ChangePassword.ConfirmPassword"></span>
+                        </div>
+
+                        <button type="submit" class="btn btn-sm btn-success">Submit Form</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*add contact modal box*@
+<div class="modal fade" id="contactModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="contactModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add a contact</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @await Component.InvokeAsync("AddContact");
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*delete modal box*@
+<div class="modal fade" id="delete" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Child's Class</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="text-align:center">
+                <i class="fa fas fa-question text-danger" style="font-size:100px"></i>
+                <h6>Are you sure you want to completely delete your account?</h6>
+                <a class="btn btn-sm btn-danger" asp-page="/Accounts/Delete">Continue</a>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*picture update modal box*@
+<div class="modal fade" id="updatePicture" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="updatePictureModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update Child's Class</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="false">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body" style="text-align:center">
+                @await Component.InvokeAsync("UpdatePic", new { Id = Model.ViewModel.User.Id }) 
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+

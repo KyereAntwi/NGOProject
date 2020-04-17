@@ -1,0 +1,274 @@
+﻿@page
+@model AppUi.Pages.Admin.VolunteerModel
+@{
+    Layout = "~/Pages/Shared/_AdminLayout.cshtml";
+}
+
+    <ul class="nav nav-tabs" id="nav-tab" role="tablist">
+        <li class="nav-item"><a class="nav-link active" id="nav-biography-tab" data-toggle="tab" href="#nav-biography" role="tab" aria-controls="nav-home" aria-selected="true">Biography</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-children-tab" data-toggle="tab" href="#nav-children" role="tab" aria-controls="nav-children" aria-selected="false">Children Supporting</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-letters-tab" data-toggle="tab" href="#nav-letters" role="tab" aria-controls="nav-letters" aria-selected="false">Letters Written</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-letters-tab" data-toggle="tab" href="#nav-contacts" role="tab" aria-controls="nav-contacts" aria-selected="false">Contacts</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-activities-tab" data-toggle="tab" href="#nav-activities" role="tab" aria-controls="nav-activities" aria-selected="false">Activities</a></li>
+        <li class="nav-item"><a class="nav-link" id="nav-visitations-tab" data-toggle="tab" href="#nav-visitations" role="tab" aria-controls="nav-visitations" aria-selected="false">Visitations</a></li>
+    </ul>
+
+    <div class="tab-content" id="nav-tabContent">
+        <div class="tab-pane fade show active" id="nav-biography" role="tabpanel" aria-labelledby="nav-biography-tab">
+            <div class="row">
+                <div class="col-md-4 col-sm-12">
+                    <div class="card" style="width:16rem;">
+                        @if (Model.ViewModel.User.Photograph != null)
+                        {
+                            <img class="img-fluid card-img-top" src="@Url.Page("/UserImage", new { Id = Model.ViewModel.User.Id })" />
+                        }
+                        else
+                        {
+                            <img class="img-fluid card-img-top" src="~/images/21104.png" />
+                        }
+                    </div>
+                </div>
+
+                <div class="col-md-8 col-sm-12">
+                    <ul class="list-group mt-5">
+                        <li class="list-group-item">
+                            <span><i class="fa fas fa-envelope"></i></span>
+                            @Model.ViewModel.Identity.Email.ToUpper()
+                        </li>
+                        <li class="list-group-item">
+                            <span><i class="fa fas fa-phone"></i></span>
+                            Active Mobile: @Model.ViewModel.Identity.PhoneNumber
+                        </li>
+                        <li class="list-group-item">
+                            <span><i class="fa fas fa-calendar"></i></span>
+                            Account Registration Date: @Model.ViewModel.User.DateAdded.ToLongDateString() and Time: @Model.ViewModel.User.DateAdded.ToLongTimeString()
+                        </li>
+                    </ul>
+
+                    <ul class="list-group mt-5">
+                        <li class="list-group-item">
+                            Name: <b>@Model.ViewModel.User.Name.ToUpper()</b>
+                        </li>
+
+                        <li class="list-group-item">
+                            Gender: <b>@Model.ViewModel.User.Gender.ToUpper()</b>
+                        </li>
+
+                        <li class="list-group-item">
+                            Date of Birth: <b>@Model.ViewModel.User.DateOfBirth.ToLongDateString()</b>
+                        </li>
+
+                        <li class="list-group-item">
+                            Nationality: <b>@Model.ViewModel.User.Nationality.ToUpper()</b>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="nav-children" role="tabpanel" aria-labelledby="nav-children-tab">
+            @if (Model.ViewModel.User.Children != null)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Child's Fullname</th>
+                                <th>Activation Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var child in Model.ViewModel.User.Children) 
+                            {
+                                <tr>
+                                    <td><img src="@Url.Page("/ChildImage", new { Id = child.ChildId })" class="rounded-circle" width="40" height="40"/></td>
+                                    <td>@child.Child.Fullname</td>
+                                    <td>
+                                        @if (child.Accepted)
+                                        {
+                                            <p class="badge badge-pill badge-success">Activated</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="badge badge-pill badge-warning">Not Activated</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (!child.Accepted) 
+                                        {
+                                            <a class="btn btn-secondary" href="@Url.Page("/Admin/Children/ActivateSupport", new { Id = child.ChildId })">Activate Support</a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <h3>There are supporting children yet!</h3>
+            }
+        </div>
+        <div class="tab-pane fade" id="nav-letters" role="tabpanel" aria-labelledby="nav-letters-tab">
+            @if (Model.ViewModel.User.Letters != null)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                            @foreach (var item in Model.ViewModel.User.Letters) 
+                            {
+                                <tr>
+                                    <td>
+                                        <img class="rounded-circle" width="40" height="40" src="@Url.Page("/ChildImage", new { Id = item.ChildId})"/>
+                                        <span>@item.Child.Fullname</span>
+                                    </td>
+                                    <td>@item.Title</td>
+                                    <td>@item.DateWritten.ToLongDateString()</td>
+                                    <td>
+                                        @if (item.Seen)
+                                        {
+                                            <p class="text-success">Seen</p>
+                                        }
+                                        else 
+                                        {
+                                            <p class="text-warning">Unseen</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else 
+            {
+                <h3>There are no letters written by user</h3>
+            }
+        </div>
+        <div class="tab-pane fade" id="nav-contacts" role="tabpanel" aria-labelledby="nav-contacts-tab">
+            @if (Model.ViewModel.User.Contacts != null)
+            {
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Address 1</th>
+                                <th>Address 2</th>
+                                <th>Street</th>
+                                <th>Country</th>
+                                <th>Zipcode</th>
+                                <th>Telephone</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.ViewModel.User.Contacts) 
+                            {
+                                <tr>
+                                    <td>@item.Address1</td>
+                                    <td>@item.Address2</td>
+                                    <td>@item.Street</td>
+                                    <td>@item.Country</td>
+                                    <td>@item.Zipcode</td>
+                                    <td>
+                                        @item.Telephone
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else 
+            {
+                <h3>User has no added extra contacts yet</h3>
+            }
+        </div>
+        <div class="tab-pane fade" id="nav-activities" role="tabpanel" aria-labelledby="nav-activities-tab">
+            @if (Model.ViewModel.User.TimeLines != null)
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Time</th>
+                                <th>Activity</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.ViewModel.User.TimeLines) 
+                            {
+                                <tr>
+                                    <td>@item.TimeStamp.ToLongDateString()</td>
+                                    <td>@item.TimeStamp.ToLongTimeString()</td>
+                                    <td>@item.Activity</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else 
+            {
+                <h3>The user has not performed any activity yet!</h3>
+            }
+        </div>
+        <div class="tab-pane fade" id="nav-visitations" role="tabpanel" aria-labelledby="nav-visitations-tab">
+            @if (Model.ViewModel.User.Visitations != null)
+            {
+                <div class="table-responsive">
+                    <table class="table table-stripped">
+                        <thead>
+                            <tr>
+                                <th>Arrival Date</th>
+                                <th>Leaving Date</th>
+                                <th>Date Scheduled</th>
+                                <th>Done Status</th>
+                                <th>Canceled Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model.ViewModel.User.Visitations) 
+                            {
+                                <tr>
+                                    <td>@item.ReportingDate.ToLongDateString()</td>
+                                    <td>@item.LeavingDate.ToLongDateString()</td>
+                                    <td>@item.DateAdded.ToLongDateString()</td>
+                                    <td>
+                                        @if (item.Done)
+                                        {
+                                            <p class="badge badge-pill badge-success">Done</p>
+                                        }
+                                        else 
+                                        {
+                                            <p class="badge badge-pill badge-secondary">Pending</p>
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (item.Cancelled)
+                                        {
+                                            <p class="badge badge-pill badge-warning">Canceled</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="badge badge-pill badge-success">Not Canceled</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else 
+            {
+                <h3>There are no visitations scheduled by user</h3>
+            }
+        </div>
+    </div>
